@@ -41,6 +41,7 @@ RETURNS FLOAT AS $$
 DECLARE
     total INT;
     cnt INT;
+    highest INT := 0;
 BEGIN
     SELECT SUM(score), COUNT(*) INTO total, cnt
     FROM Exams
@@ -60,24 +61,23 @@ BEGIN
             AND e3.cid = stu_id
         );
         cnt := cnt - 2;
-    ELSE THEN RETURN;
+        r_avg := CAST(total AS FLOAT) / cnt;
     END IF;
-    r_avg := CAST(total AS FLOAT) / cnt;
 END
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION list_r_avg ()
-RETURNS TABLE (stu_id INT , ravg FLOAT) AS $$ 
-DECLARE 
-    curs CURSOR FOR (
-        SELECT sid, score
-        FROM Exams
-        ORDER BY sid
-    );
-BEGIN
-/* write
-your code here */
-END;
-$$
-LANGUAGE plpgsql;
+-- CREATE OR REPLACE FUNCTION list_r_avg()
+-- RETURNS TABLE (stu_id INT , ravg FLOAT) AS $$ 
+-- DECLARE 
+--     curs CURSOR FOR (
+--         SELECT sid, score
+--         FROM Exams
+--         ORDER BY sid
+--     );
+-- BEGIN
+-- /* write
+-- your code here */
+-- END;
+-- $$
+-- LANGUAGE plpgsql;
