@@ -11,8 +11,7 @@ BEGIN
     AND score >= ALL (
         SELECT score FROM Exams e2
         WHERE e2.sid = e1.sid
-    )
-    LIMIT 1;
+    );
 
     SELECT e1.score, e1.cid INTO min_score, min_cid
     FROM Exams e1
@@ -21,8 +20,7 @@ BEGIN
         SELECT score FROM Exams e2
         WHERE e2.sid = stu_id
     )
-    AND e1.score < max_score
-    LIMIT 1;
+    AND e1.score < max_score;
 END;
 $$ LANGUAGE plpgsql;
 
@@ -86,7 +84,7 @@ BEGIN
         IF (r1.sid <> stu_id) THEN
             IF cnt >= 3 THEN
                 RAISE NOTICE '%,%,%,%', total,big,small,cnt;
-                ravg := (total - big - small) / (cnt - 2);
+                ravg := CAST ((total - big - small) AS FLOAT) / (cnt - 2);
             END IF;
             RETURN NEXT;
             stu_id := r1.sid;

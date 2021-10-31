@@ -18,6 +18,6 @@ INSERT INTO Exams VALUES
 
 -- SELECT * FROM max_min(1);
 SELECT * FROM revised_avg(1);
-SELECT * FROM revised_avg(2);
+SELECT * FROM revised_avg(4);
 SELECT * FROM list_r_avg();
 SELECT * FROM list_scnd_highest();
